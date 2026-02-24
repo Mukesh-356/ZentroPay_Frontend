@@ -31,7 +31,7 @@ const PaymentCard = () => {
 
         try {
             // 1. Create Order
-            const result = await axios.post("https://zentropaybackend.onrender.com/api/payment/order");
+            const result = await axios.post("https://zentropay-backend.onrender.com/api/payment/order");
 
             if (!result) {
                 alert("Server error. Are you online?");
@@ -58,7 +58,7 @@ const PaymentCard = () => {
                     };
 
                     try {
-                        const verifyRes = await axios.post("https://zentropaybackend.onrender.com/api/payment/verify", data);
+                        const verifyRes = await axios.post("https://zentropay-backend.onrender.com/api/payment/verify", data);
                         if (verifyRes.data.success) {
                             window.location.href = verifyRes.data.redirect_url;
                         } else {
