@@ -30,8 +30,8 @@ const PaymentCard = () => {
         }
 
         try {
-            // 1. Create Order
-            const result = await axios.post("https://zentropay-backend.onrender.com/api/payment/order");
+            const API_URL = import.meta.env.MODE === 'development' ? 'http://localhost:5000' : 'https://zentropay-backend.onrender.com';
+            const result = await axios.post(`${API_URL}/api/payment/order`);
 
             if (!result) {
                 alert("Server error. Are you online?");
@@ -49,6 +49,7 @@ const PaymentCard = () => {
                 description: "Internship Payment",
                 order_id: order_id,
                 handler: async function (response) {
+                    setLoading(true);
                     const data = {
                         razorpay_order_id: response.razorpay_order_id,
                         razorpay_payment_id: response.razorpay_payment_id,
@@ -58,15 +59,18 @@ const PaymentCard = () => {
                     };
 
                     try {
-                        const verifyRes = await axios.post("https://zentropay-backend.onrender.com/api/payment/verify", data);
+                        const API_URL = import.meta.env.MODE === 'development' ? 'http://localhost:5000' : 'https://zentropay-backend.onrender.com';
+                        const verifyRes = await axios.post(`${API_URL}/api/payment/verify`, data);
                         if (verifyRes.data.success) {
                             window.location.href = verifyRes.data.redirect_url;
                         } else {
                             alert("Payment verification failed");
+                            setLoading(false);
                         }
                     } catch (error) {
                         console.log(error);
                         alert("Error verifying payment");
+                        setLoading(false);
                     }
                 },
                 prefill: {

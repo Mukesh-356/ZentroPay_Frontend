@@ -6,13 +6,13 @@ import Footer from './components/Footer';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 
 function App() {
-  const [paymentId, setPaymentId] = useState(null);
-
-  useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const id = queryParams.get('payment_id');
-    if (id) setPaymentId(id);
-  }, []);
+  const [paymentId, setPaymentId] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const queryParams = new URLSearchParams(window.location.search);
+      return queryParams.get('payment_id');
+    }
+    return null;
+  });
 
   return (
     <div className="min-h-screen gradient-bg relative overflow-x-hidden flex flex-col font-sans">

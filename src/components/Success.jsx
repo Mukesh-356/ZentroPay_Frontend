@@ -1,9 +1,25 @@
-import React from 'react';
-import { CheckCircle, Download, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { CheckCircle, ArrowRight } from 'lucide-react';
+import PortalAccessForm from './PortalAccessForm';
 
 const Success = ({ paymentId }) => {
+    const [showForm, setShowForm] = useState(false);
+
+    useEffect(() => {
+        if (!showForm) {
+            const timer = setTimeout(() => {
+                setShowForm(true);
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [showForm]);
+
+    if (showForm) {
+        return <PortalAccessForm paymentId={paymentId} />;
+    }
+
     return (
-        <div className="glass-card p-8 text-center relative overflow-hidden">
+        <div className="glass-card p-8 text-center relative overflow-hidden group">
             <div className="absolute inset-0 bg-green-500/5 mix-blend-overlay"></div>
 
             <div className="relative z-10">
@@ -28,15 +44,15 @@ const Success = ({ paymentId }) => {
 
                 <div className="flex flex-col gap-3">
                     <button
-                        onClick={() => window.location.href = '/'}
-                        className="w-full bg-white/10 hover:bg-white/20 text-white font-medium py-3.5 px-6 rounded-xl transition duration-200 border border-white/10 flex items-center justify-center gap-2 group"
+                        onClick={() => setShowForm(true)}
+                        className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-medium py-3.5 px-6 rounded-xl shadow-lg shadow-green-500/30 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 group border border-white/10"
                     >
-                        <span>Back to Home</span>
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <span>Create Portal Access</span>
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </button>
 
                     <p className="text-xs text-gray-500 mt-2">
-                        Check your spam folder if you don't see the email.
+                        Next step: Complete your portal profile.
                     </p>
                 </div>
             </div>
