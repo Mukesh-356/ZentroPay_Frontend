@@ -5,7 +5,9 @@ const Navbar = () => {
     return (
         <nav className="w-full py-5 px-6 md:px-12 flex justify-between items-center absolute top-0 left-0 z-50">
             <div className="flex items-center gap-3">
-                <img src="/logo.png" alt="Zentro Solutions" className="w-10 h-10 object-contain drop-shadow-md" />
+                <div className="w-10 h-10 rounded-full overflow-hidden bg-white/10 border border-white/15 shadow-md shadow-black/20">
+                    <img src="/logo.png" alt="Zentro Solutions" className="w-full h-full object-cover" />
+                </div>
                 <span className="text-xl font-bold text-white tracking-tight">Zentro Solutions</span>
             </div>
 

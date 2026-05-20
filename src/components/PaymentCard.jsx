@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { CreditCard, User, Mail, ShieldCheck, Sparkles } from 'lucide-react';
 
+const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_SrgjvLesq8aSJp';
+
 const PaymentCard = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -41,8 +43,14 @@ const PaymentCard = () => {
 
             const { amount, id: order_id, currency } = result.data;
 
+            if (!RAZORPAY_KEY_ID) {
+                alert('Razorpay key is not configured. Set VITE_RAZORPAY_KEY_ID in the frontend environment.');
+                setLoading(false);
+                return;
+            }
+
             const options = {
-                key: import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_test_YourTestKeyHere",
+                key: RAZORPAY_KEY_ID,
                 amount: amount.toString(),
                 currency: currency,
                 name: "Zentro Solutions",
@@ -103,7 +111,9 @@ const PaymentCard = () => {
 
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <img src="/logo.png" alt="Zentro Logo" className="w-16 h-16 mx-auto mb-4 object-contain drop-shadow-lg" />
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden bg-white/10 border border-white/15 shadow-lg shadow-black/20">
+                        <img src="/logo.png" alt="Zentro Logo" className="w-full h-full object-cover" />
+                    </div>
                     <h2 className="text-3xl font-bold text-white mb-2 tracking-tight">Zentro Solutions</h2>
                     <p className="text-gray-400 flex items-center justify-center gap-2 text-sm">
                         <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
