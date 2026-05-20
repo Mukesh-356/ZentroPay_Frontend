@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { CreditCard, User, Mail, ShieldCheck, Sparkles } from 'lucide-react';
 
-const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_SrgjvLesq8aSJp';
+const RAZORPAY_KEY_ID = 'rzp_live_SrgjvLesq8aSJp';
 const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.MODE === 'development' ? 'http://localhost:5000' : 'https://zentropay-backend.onrender.com');
 
 const PaymentCard = () => {
